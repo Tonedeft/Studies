@@ -43,7 +43,7 @@ public:
         return *this;
     }
 
-    _T get(int i, int j) {
+    _T get(int i, int j) const {
         return data[i][j];
     }
 
@@ -79,8 +79,7 @@ public:
         return t;
     }
 
-    // TODO: Not sure why it didn't like when I made these const Matrix& types.
-    friend Matrix operator+(Matrix lhs, Matrix rhs) {
+    friend Matrix operator+(Matrix lhs, const Matrix& rhs) {
         Matrix ret;
 
         for (int i = 0; i < HEIGHT; ++i) {
@@ -92,7 +91,7 @@ public:
         return ret;
     }
 
-    friend Matrix operator*(_T scalar, Matrix rhs) {
+    friend Matrix operator*(_T scalar, const Matrix& rhs) {
         Matrix ret;
 
         for (int i = 0; i < HEIGHT; ++i) {
@@ -105,9 +104,25 @@ public:
     }
 
 
+
     // I think this is only supported in C++23, not C++20
     // constexpr _T& operator[](size_t i, size_t j) {
     //     return data[i][j];
     // }
 
 };
+
+template<typename _T, int HEIGHT1, int WIDTH1, int WIDTH2>
+Matrix<_T, HEIGHT1, WIDTH2> operator*(const Matrix<_T, HEIGHT1, WIDTH1>& lhs, const Matrix<_T, WIDTH1, WIDTH2>& rhs) {
+    Matrix<_T, HEIGHT1, WIDTH2> ret;
+    
+    for (int i = 0; i < HEIGHT1; ++i) {
+        for (int j = 0; j < WIDTH2; ++j) {
+            for (int k = 0; k < WIDTH1; ++k) {
+                ret(i,j) += lhs.get(i,k) * rhs.get(k,j);
+            }
+        }
+    }
+
+    return ret;
+}
