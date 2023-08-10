@@ -126,3 +126,16 @@ Matrix<_T, HEIGHT1, WIDTH2> operator*(const Matrix<_T, HEIGHT1, WIDTH1>& lhs, co
 
     return ret;
 }
+
+template <typename _T, int HEIGHT> using ColVector = Matrix<_T, HEIGHT, 1>;
+
+template <typename _T, int WIDTH> using RowVector = Matrix<_T, 1, WIDTH>;
+
+template <typename _T, int LENGTH>
+_T operator*(const RowVector<_T, LENGTH>& lhs, const ColVector<_T, LENGTH>& rhs) {
+    _T result;
+    for (int i = 0; i < LENGTH; ++i) {
+        result += lhs.get(0,i) * rhs.get(i,0);
+    }
+    return result;
+}
