@@ -129,4 +129,11 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 Created sample.txt file in the top-level directory with "I love Terraform" as the contents.
 Also creates a terraform.tfstate file that tracks the current state of the terraform deployment
 
+###################################################
+
+"local_sensitive_file" can be used instead of "local_file" to prevent "content" from being displayed in logging.
+local_sensitive_file also sets file_permission to 0700 by default.
+
+The training recommended a deprecated setting, but terraform gave a warning.
+
 
