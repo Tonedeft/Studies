@@ -159,4 +159,8 @@ resource random_integer rint {
 NOTE: If you don't change the "random_integer" block when you run
 "terraform plan", it won't change the random integer value.
 
+###################################################
 
+When referencing "variables", use "var.<variable_name>
+
+Variables are stored in variables.tf

@@ -1,3 +1,17 @@
+
+# Create a resource block
+# resource type = local_file (provided by resource provider)
+# resource name = sample_res (we provide this)
+resource local_file sample_res {
+    # The file contents will be set by the variable "content1"
+    # defined in variables.tf
+    content = var.content1
+    
+    # The file connametents will be set by the variable "filename1"
+    # defined in variables.tf
+    filename             = var.filename1
+}
+
 # Create a resource block
 # resource type = local_sensitive_file (provided by resource provider)
 # resource name = cat_res (we provide this)
