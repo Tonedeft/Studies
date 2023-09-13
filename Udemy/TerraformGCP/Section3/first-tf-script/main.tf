@@ -32,3 +32,59 @@ resource local_file dog_res {
     content = "I love Dogs"
 }
 
+# New resource:
+# resource type = random_integer (provided by random provider)
+# resource name = rint
+#
+# The result of this random integer generation is 
+# accessible by referencing: random_integer.rint.result
+#
+# NOTE: By default, this will not change the next time you
+#       run terraform plan/apply unless you change the contents
+#       of this block
+resource random_integer rint {
+    # [required]: minimum integer
+    min = 80
+    # [required]: maximum integer
+    max = 200
+}
+
+# New "output" block:
+# output name = "name1"
+output name1 {
+    # [required] The value to be displayed to output
+    # Set the value to output to the result of the
+    # random integer generation above.
+    value       = random_integer.rint.result
+
+    # sensitive   = true
+    # description = "description"
+    # depends_on  = []
+}
+
+resource random_string rstring {
+    # [required] - length of string to generate
+    length  = 15
+    
+    # upper   = true
+    # lower   = true
+    # number  = true
+    # special = true
+
+    # keepers = {
+    #     id = value
+    # }
+}
+
+# New "output" block:
+# output name = "name2"
+output name2 {
+    # [required] The value to be displayed to output
+    # Set the value to output to the result of the
+    # random integer generation above.
+    value       = random_string.rstring.result
+
+    # sensitive   = true
+    # description = "description"
+    # depends_on  = []
+}
