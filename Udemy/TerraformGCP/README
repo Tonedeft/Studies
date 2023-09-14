@@ -291,3 +291,14 @@ In GCP Console, go to IAM and "Grant Permission".  Add terraform-gcp... as "Stor
 NOTE: terraform might need both create and delete permission to make changes.
 
 ###############################################
+
+Section 5: Working with Cloud Storage
+
+https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket
+
+Moving provider requirements and configurations into
+provider.tf
+
+
+
+
