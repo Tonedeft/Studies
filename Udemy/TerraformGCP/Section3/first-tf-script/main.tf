@@ -2,15 +2,38 @@
 # Create a resource block
 # resource type = local_file (provided by resource provider)
 # resource name = sample_res (we provide this)
-resource local_file sample_res {
-    # The file contents will be set by the variable "content1"
-    # defined in variables.tf
-    content = var.content1["name"]
+# resource local_file sample_res {
+#     # The file contents will be set by the variable "content1"
+#     # defined in variables.tf
+#     content = var.content1["name"]
 
-    # The file connametents will be set by the variable "filename1"
-    # defined in variables.tf
-    filename             = var.filename1
+#     # The file connametents will be set by the variable "filename1"
+#     # defined in variables.tf
+#     filename             = var.filename1
+# }
+
+# Create a resource block
+# resource type = local_file (provided by resource provider)
+# resource name = name (we provide this)
+resource local_file name1 {
+    # The file contents
+    content = "This is the random string from RP : ${random_string.name2.id}"
+
+    # The file name
+    filename             = "explicit.txt"
+
+    # This tells terraform we explicitly depend on random_string.name2
+    depends_on = [random_string.name2]
 }
+
+# Create a resource block
+# resource type = random_string (provided by resource provider)
+# resource name = name (we provide this)
+resource random_string name2 {
+    # [required] - length of string to generate
+    length  = 10
+}
+
 
 # Create a resource block
 # resource type = local_sensitive_file (provided by resource provider)

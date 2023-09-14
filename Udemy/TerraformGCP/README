@@ -180,3 +180,22 @@ Variable priority setting:
 3. terraform.tfvars
 2. variable.auto.tfvars
 1. terraform apply -var "filename=sample.txt" (highest priority)
+
+###############################################
+
+Providers are downloaded with terraform init
+
+Dependencies can by referenced inside the tf files by
+indexing with ${random_string.name2.id} (example)
+${<provider>.<name>.id}
+
+We can tell terraform we depend on something explicitly by using:
+depends_on = [random_string.name2]
+
+###############################################
+
+To destroy everything:
+> terraform destroy
+
+
+
