@@ -197,5 +197,7 @@ depends_on = [random_string.name2]
 To destroy everything:
 > terraform destroy
 
+###############################################
 
+Put outputs in "output.tf" file
 
