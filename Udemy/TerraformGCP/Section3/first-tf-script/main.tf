@@ -100,3 +100,22 @@ resource random_string rstring {
     #     id = value
     # }
 }
+
+resource random_integer myint {
+  min = 20
+  max = 300
+
+  lifecycle {
+    # This tells terraform to only delete the existing
+    # instance after the new instance is created
+    create_before_destroy = true
+
+    # Tells terraform to prevent this resource from being
+    # destroyed (terraform destroy)
+    prevent_destroy = false
+
+    # Tells terraform to not recreate the resource if the
+    # "min" attribute changes
+    ignore_changes = [min]
+  }
+}

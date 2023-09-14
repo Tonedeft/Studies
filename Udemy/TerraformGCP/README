@@ -201,3 +201,22 @@ To destroy everything:
 
 Put outputs in "output.tf" file
 
+###############################################
+
+Lifecycle rules:
+
+  lifecycle {
+    # This tells terraform to only delete the existing
+    # instance after the new instance is created
+    create_before_destroy = true
+
+    # Tells terraform to prevent this resource from being
+    # destroyed (terraform destroy)
+    prevent_destroy = false
+
+    # Tells terraform to not recreate the resource if the
+    # "min" attribute changes
+    ignore_changes = [min]
+  }
+  
+###############################################
