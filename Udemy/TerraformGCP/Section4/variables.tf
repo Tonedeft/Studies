@@ -21,3 +21,15 @@ variable gcp_zone {
     # default value
     default     = "us-central1-a"
 }
+
+# GCP Credentials for the service account are managed here:
+# https://console.cloud.google.com/iam-admin/serviceaccounts?project
+# Open the Service Account and click Keys.
+# Keys can be created and downloaded to .json files.
+# They must be kept secret.
+variable gcp_crendentials {
+    # [required] type of variable
+    type        = string
+    # default value
+    default     = "demo_credentials.json"
+}

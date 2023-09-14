@@ -8,8 +8,8 @@ terraform {
 }
 
 # Set up Google Provider
-# These variables are defined in "gcpvars.tf"
-# And overridden in gcpvars.tfvars (unmanaged by Git)
+# These variables are defined in "variables.tf"
+# And overridden in terraform.tfvars (unmanaged by Git)
 provider "google" {
     # The GCP Project to Configure
     project = var.gcp_projectid
@@ -17,6 +17,8 @@ provider "google" {
     region = var.gcp_region
     # The GCP Zone
     zone = var.gcp_zone
+    # Service Account Credentials to Authenticate to GCP
+    credentials = var.gcp_crendentials
 }
 
 # Resource type = Google Storage Bucket
@@ -25,7 +27,7 @@ provider "google" {
 resource google_storage_bucket "GCS1" {
     # Bucket name in GCP
     # NOTE: This must be GLOBALLY unique across ALL of GCP
-    name = "${var.gcp_projectid}_${var.gcp_region}_bucket_up"   
+    name = "${var.gcp_projectid}_${var.gcp_region}_bucket_service_acct"   
     # [required] - where to host the bucket (must be newer than the training)
     location = "US"
 }

@@ -242,7 +242,6 @@ https://registry.terraform.io/providers/hashicorp/google/latest/docs
 
 3. Set up Google Provider in main.tf
 
-
 provider "google" {
     # The GCP Project to Configure
     project = var.gcp_projectid
@@ -263,3 +262,32 @@ Log into GCP from your console
 
 This creates "application_default_credentials.json" on your local machine.
 
+###############################################
+
+PREFERRED:
+Using a Service Account to deploy to GCP
+
+provider needs "credentials":
+
+provider "google" {
+    # The GCP Project to Configure
+    project = var.gcp_projectid
+    # The Region to work in
+    region = var.gcp_region
+    # The GCP Zone
+    zone = var.gcp_zone
+    # Service Account Credentials to Authenticate to GCP
+    credentials = var.gcp_crendentials
+}
+
+Go to "Service Accounts"
+Click on 3 dots and click "Manage Keys"
+
+THIS FAILS BECAUSE THE SERVICE ACCT DOESN'T HAVE PERMISSION:
+"Permission 'storage.buckets.get' denied on resource (or it may not exist)."
+
+In GCP Console, go to IAM and "Grant Permission".  Add terraform-gcp... as "Storage Admin" role.
+
+NOTE: terraform might need both create and delete permission to make changes.
+
+###############################################

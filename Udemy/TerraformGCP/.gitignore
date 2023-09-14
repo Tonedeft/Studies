@@ -4,3 +4,5 @@ terraform.exe
 **/terraform.tfstate.backup
 **/terraform.tfvars*
 **/*.auto.tfvars*
+**/keys.json
+**/secrets*
