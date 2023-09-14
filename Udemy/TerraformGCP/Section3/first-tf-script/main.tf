@@ -1,3 +1,15 @@
+terraform {
+    required_providers {
+        random = {
+            source= "hashicorp/random"
+            version = "2.3.1"
+        }
+    }
+}
+
+provider "random" {
+    
+}
 
 # Create a resource block
 # resource type = local_file (provided by resource provider)
