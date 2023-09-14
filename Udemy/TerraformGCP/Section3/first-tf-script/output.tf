@@ -24,3 +24,7 @@ output name1 {
     # description = "description"
     # depends_on  = []
 }
+
+output dataout {
+  value       = data.local_file.df.content
+}

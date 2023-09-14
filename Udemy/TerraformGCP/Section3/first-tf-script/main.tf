@@ -1,15 +1,15 @@
-terraform {
-    required_providers {
-        random = {
-            source= "hashicorp/random"
-            version = "2.3.1"
-        }
-    }
-}
+# terraform {
+#     required_providers {
+#         random = {
+#             source= "hashicorp/random"
+#             version = "2.3.1"
+#         }
+#     }
+# }
 
-provider "random" {
-    
-}
+# provider "random" {
+
+# }
 
 # Create a resource block
 # resource type = local_file (provided by resource provider)
@@ -130,4 +130,13 @@ resource random_integer myint {
     # "min" attribute changes
     ignore_changes = [min]
   }
+}
+
+# Create a data source
+# Data source type = local_file
+# Data source name = df
+# The file contents will be accessible via: data.local_file.df.content
+data local_file df {
+    # Read from this file
+    filename = "sample1.txt"
 }
