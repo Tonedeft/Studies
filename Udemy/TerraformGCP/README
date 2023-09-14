@@ -164,3 +164,19 @@ NOTE: If you don't change the "random_integer" block when you run
 When referencing "variables", use "var.<variable_name>
 
 Variables are stored in variables.tf
+
+When using variables, you can just create :
+variable filename {}
+And terraform will ask you to input the variable
+
+terraform apply -var "filename=sample.txt"
+also works
+
+ENV variables also work:
+export TF_VAR_filename="sample.txt"
+
+Variable priority setting:
+4. TF_VAR_filename
+3. terraform.tfvars
+2. variable.auto.tfvars
+1. terraform apply -var "filename=sample.txt" (highest priority)

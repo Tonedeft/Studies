@@ -5,8 +5,8 @@
 resource local_file sample_res {
     # The file contents will be set by the variable "content1"
     # defined in variables.tf
-    content = var.content1
-    
+    content = var.content1["name"]
+
     # The file connametents will be set by the variable "filename1"
     # defined in variables.tf
     filename             = var.filename1
