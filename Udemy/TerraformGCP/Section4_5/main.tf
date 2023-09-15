@@ -85,3 +85,43 @@ resource "google_compute_network" "custom-vpc-tf" {
     # Tell it not to automatically create subnetworks
     auto_create_subnetworks = false
 }
+
+# Resource type = Google Compute Subnetwork
+# Resource name = custom-vpc-tf-sub-us
+# This subnetwork will be assigned to the "custom-vpc-tf" VPC
+resource "google_compute_subnetwork" "custom-vpc-tf-sub-us" {
+    #[required] Name of the subnetwork in GCP
+    name = "${resource.google_compute_network.custom-vpc-tf.name}-sub-us"
+
+    #[required] Terraform ID of the google_compute_network
+    # this is assigned to
+    network = google_compute_network.custom-vpc-tf.id
+
+    #[required] IP range for the subnet
+    ip_cidr_range = "10.1.0.0/24"
+
+    #[required] Region for the subnet
+    region = "us-east4"
+
+    # turn on private google access for this subnet
+    private_ip_google_access = true
+}
+
+resource "google_compute_firewall" "custom-vpc-tf-allow-icmp" {
+    #[required] name
+    name = "${resource.google_compute_network.custom-vpc-tf.name}-allow-icmp"
+
+    #[required] network the firewall rule applies to
+    network = google_compute_network.custom-vpc-tf.id
+
+    # Allow icmp traffic
+    allow {
+        protocol = "icmp"
+    }
+
+    # Only allow traffic from my IP address
+    source_ranges = [var.secret_my_ip_address]
+
+    # Priority (0-65536)
+    priority = 455
+}

@@ -38,3 +38,8 @@ variable gcs1_image1 {
     type = string
     default = "null_image.jpg"
 }
+
+variable secret_my_ip_address {
+    type = string
+    default = "0.0.0.0/32"
+}

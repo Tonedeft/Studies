@@ -321,3 +321,8 @@ for things like buckets/VPCs
 Service account requires: compute.network.create permission
 
 Go to IAM and give terraform-gcp the "Compute Network Admin" role
+
+https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall
+
+Requires compute.firewalls.create permission
+(Compute Security Admin)
