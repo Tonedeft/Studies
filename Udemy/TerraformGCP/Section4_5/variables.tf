@@ -33,3 +33,8 @@ variable gcp_crendentials {
     # default value
     default     = "demo_credentials.json"
 }
+
+variable gcs1_image1 {
+    type = string
+    default = "null_image.jpg"
+}

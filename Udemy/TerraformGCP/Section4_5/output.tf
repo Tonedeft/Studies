@@ -10,3 +10,11 @@ output project_configuration {
     # description = "description"
     # depends_on  = []
 }
+
+output auto_vpc_id {
+    value = google_compute_network.auto-vpc-tf.id
+}
+
+output custom_vpc_id {
+    value = google_compute_network.custom-vpc-tf.id
+}

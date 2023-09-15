@@ -4,7 +4,7 @@
 resource google_storage_bucket "GCS1" {
     # [required] Bucket name in GCP
     # NOTE: This must be GLOBALLY unique across ALL of GCP
-    name = "${var.gcp_projectid}_${var.gcp_region}_bucket-from-terraform"   
+    name = "${var.gcp_projectid}-${var.gcp_region}-gcs1"   
     
     # [required] - where to host the bucket (must be newer than the training)
     location = "US-EAST4"
@@ -40,12 +40,14 @@ resource google_storage_bucket "GCS1" {
     # CAUTION: locking the retention policy is irreversible
     retention_policy {
         # Retention period is set in seconds
-        retention_period = 864000
+        # retention_period = 864000
+        retention_period = 60
     }
 }
 
 # Resource type = Google Storage Bucket Object
 # Resource name = image1
+# Storage Objects will upload a file or create a file inside the specified bucket
 resource "google_storage_bucket_object" "image1" {
     #[required] Bucket to create the object in
     #           (Refers to another resource)
@@ -56,5 +58,30 @@ resource "google_storage_bucket_object" "image1" {
 
     #[mostly-required] Path to the file to upload
     # (only required if "content" is not defined)
-    source = "secrets/bloom.JPG"
+    source = "${var.gcs1_image1}"
+}
+
+# Resource type = Google Compute Network VPC
+# Resource name = auto-vpc-tf
+# This will create a Virtual Private Container with ~28 subnets
+# automatically instantiated
+resource "google_compute_network" "auto-vpc-tf" {
+    #[required] Name of the VPC in GCP
+    name = "${var.gcp_projectid}-${var.gcp_region}-auto-vpc-tf"
+  
+    # Tell it to automatically create subnetworks
+    auto_create_subnetworks = true
+}
+
+# Resource type = Google Compute Network VPC
+# Resource name = custom-vpc-tf
+# This will create a Virtual Private Container with 0 subnets
+# automatically instantiated
+# We will add specific subnets to this VPC
+resource "google_compute_network" "custom-vpc-tf" {
+    #[required] Name of the VPC in GCP
+    name = "${var.gcp_projectid}-${var.gcp_region}-custom-vpc-tf"
+  
+    # Tell it not to automatically create subnetworks
+    auto_create_subnetworks = false
 }

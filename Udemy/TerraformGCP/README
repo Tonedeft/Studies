@@ -299,6 +299,25 @@ https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/s
 Moving provider requirements and configurations into
 provider.tf
 
+###############################################
 
+Section 6: Google Cloud Network
 
+When creating a VPC network, there are 2 firewall
+rules that are automatically added:
+1. Deny all ingress
+2. Allow all egress
 
+To create VPC in terraform, use the google_compute_network resource
+
+https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network
+
+Note: GCP is weird about underscores in its names
+I'm starting to use hyphens everywhere a GCP asset
+name is created.
+Note: GCP is also weird with requiring lowercase names
+for things like buckets/VPCs
+
+Service account requires: compute.network.create permission
+
+Go to IAM and give terraform-gcp the "Compute Network Admin" role
