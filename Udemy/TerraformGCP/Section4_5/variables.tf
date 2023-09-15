@@ -34,6 +34,15 @@ variable gcp_crendentials {
     default     = "demo_credentials.json"
 }
 
+
+variable gcp_subnet_range {
+    # [required] type of variable
+    type        = string
+    # default value
+    default     = "0.0.0.0/0"
+}
+
+
 variable gcs1_image1 {
     type = string
     default = "null_image.jpg"
@@ -42,4 +51,9 @@ variable gcs1_image1 {
 variable secret_my_ip_address {
     type = string
     default = "0.0.0.0/32"
+}
+
+variable service_account_email {
+    type = string
+    default = "test@google.com"
 }

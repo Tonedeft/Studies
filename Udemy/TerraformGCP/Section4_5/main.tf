@@ -98,15 +98,19 @@ resource "google_compute_subnetwork" "custom-vpc-tf-sub-us" {
     network = google_compute_network.custom-vpc-tf.id
 
     #[required] IP range for the subnet
-    ip_cidr_range = "10.1.0.0/24"
+    ip_cidr_range = var.gcp_subnet_range
 
     #[required] Region for the subnet
-    region = "us-east4"
+    region = var.gcp_region
 
     # turn on private google access for this subnet
     private_ip_google_access = true
 }
 
+# Resource type = Google Compute Firewall
+# Resource name = custom-vpc-tf-allow-icmp
+# This will create a firewall rule that will be applied
+# to the GCP asset running in custom-vpc-tf
 resource "google_compute_firewall" "custom-vpc-tf-allow-icmp" {
     #[required] name
     name = "${resource.google_compute_network.custom-vpc-tf.name}-allow-icmp"
@@ -125,3 +129,85 @@ resource "google_compute_firewall" "custom-vpc-tf-allow-icmp" {
     # Priority (0-65536)
     priority = 455
 }
+
+# Resource type = Google Compute Firewall
+# Resource name = custom-vpc-tf-allow-icmp
+# This will create a firewall rule that will be applied
+# to the GCP asset running in custom-vpc-tf
+resource "google_compute_firewall" "custom-vpc-tf-allow-ssh" {
+    #[required] name
+    name = "${resource.google_compute_network.custom-vpc-tf.name}-allow-ssh"
+
+    #[required] network the firewall rule applies to
+    network = google_compute_network.custom-vpc-tf.id
+
+    # Allow tcp traffic on port 22 (ssh)
+    allow {
+        protocol = "tcp"
+        ports = ["22"]
+    }
+
+    # Only allow traffic from my IP address
+    source_ranges = [var.secret_my_ip_address]
+
+    # Priority (0-65536)
+    priority = 455
+}
+
+# Resource type = Google Compute Instance
+# Resource name = gce-instance
+# This will create a virtual machine
+resource "google_compute_instance" "vm-from-tf" {
+    #[required] name for instance
+    name = "${var.gcp_projectid}-${var.gcp_region}-vm-from-tf"
+
+    #[required] zone to operate the VM
+    zone = var.gcp_zone
+
+    # https://cloud.google.com/compute/docs/general-purpose-machines
+    machine_type = "e2-micro"
+
+    # This allows you to resize the VM after it is started
+    # the first time
+    allow_stopping_for_update = true
+
+    # Which network and subnet does this VM belong to?
+    # Referring to previously defined assets
+    network_interface {
+        network = resource.google_compute_network.custom-vpc-tf.name
+        subnetwork = resource.google_compute_subnetwork.custom-vpc-tf-sub-us.name
+    }
+
+    # Defines OS and Hard Disk parameters
+    boot_disk {
+        initialize_params {
+            # > gcloud compute images list
+            image = "debian-11-bullseye-v20230912"
+            # 10 GB Hard Disk
+            size = 10
+        }
+        # Tell it to keep the disk when recreating the instance
+        # Otherwise it deletes the hard drive
+        auto_delete = false
+    }
+
+    # Can apply labels to assets with "labels"
+    labels = {
+        "env" = "tflearning"
+    }
+
+    # Details about up-time and availability for this instance
+    scheduling {
+        # Don't allow Google to preempt this instance
+        preemptible = false
+        # Automatically restart this when it fails
+        automatic_restart = true
+    }
+
+    # Give access to this VM from a service account
+    service_account {
+        email = var.service_account_email
+        # Access to cloud platform
+        scopes = ["cloud-platform"]
+    }
+}   

@@ -326,3 +326,25 @@ https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/c
 
 Requires compute.firewalls.create permission
 (Compute Security Admin)
+
+
+###############################################
+
+Section 7: Google Compute Engine
+
+Virtual Machines in the Cloud
+
+google_compute_instance
+
+https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance
+
+Machine types enumerated here:
+https://cloud.google.com/compute/docs/general-purpose-machines
+
+> gcloud compute images list
+
+Requires 'compute.images.get' permission
+"Compute Instance Admin (v1)"
+
+Requires permission for 'iam.serviceAccountUser'
+"Service Account User"
