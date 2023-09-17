@@ -210,4 +210,43 @@ resource "google_compute_instance" "vm-from-tf" {
         # Access to cloud platform
         scopes = ["cloud-platform"]
     }
+
+    # Ignore changes to the attached disk
+    lifecycle {
+        ignore_changes = [ attached_disk ]
+    }
 }   
+
+# Resource type = Google Compute Disk
+# Resource name = disk10gb
+# This will create a hard drive to attach to a VM
+resource "google_compute_disk" "disk10gb" {
+    #[required]
+    name = "${var.gcp_projectid}-disk-1"
+
+    #[required] Size in GB
+    size = 10
+
+    #[required] zone to host the disk (same as VM?)
+    zone = var.gcp_zone
+
+    #[required] type of hard drive
+    type = "pd-ssd"
+}
+
+# Resource type = Google Compute Attach Disk
+# Resource name = attacheddisk10gb
+# This will attach a defined hard drive to a defined VM
+# NOTE: This requires on the google_compute_instance:
+# lifecycle {
+#     ignore_changes = [ attached_disk ]
+# }
+# By default, this will not have an image, but will attach
+# another 10gb hard disk for storage to the existing VM
+resource "google_compute_attached_disk" "attacheddisk10gb" {
+    #[required] The Instance of google_compute_disk we're attaching
+    disk = google_compute_disk.disk10gb.id
+
+    #[required] The Instance of google_compute we are attaching to
+    instance = google_compute_instance.vm-from-tf.id
+}
