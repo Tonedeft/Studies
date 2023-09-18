@@ -153,7 +153,7 @@ resource "google_compute_firewall" "custom-vpc-tf-allow-ssh" {
     # Priority (0-65536)
     priority = 455
 }
-
+/*
 # Resource type = Google Compute Instance
 # Resource name = gce-instance
 # This will create a virtual machine
@@ -249,4 +249,50 @@ resource "google_compute_attached_disk" "attacheddisk10gb" {
 
     #[required] The Instance of google_compute we are attaching to
     instance = google_compute_instance.vm-from-tf.id
+}
+*/
+
+resource "google_cloud_run_service" "run-app-from-tf" {
+    #[required]
+    name="${var.gcp_projectid}-run-app-from-tf"
+
+    #[required]
+    location=var.gcp_region
+
+    template {
+        spec {
+            # What container is running in the cloud run?
+            containers {
+                # Hello world image from Google
+                # https://console.cloud.google.com/gcr/images/google-samples/global/hello-app
+                image = "gcr.io/google-samples/hello-app:1.0"
+            }
+        }
+    }   
+}
+
+# This IAM Policy allows all users (even non-Google users)
+# to invoke the Cloud Run API (access the service)
+# The online course said to use roles/viewer as the role,
+# but https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service
+# says to use run.invoker instead.
+data "google_iam_policy" "pub_iam_policy" {
+    binding {
+        role = "roles/run.invoker"
+        members = [
+            "allUsers",
+        ]
+    }
+}
+
+# Attach the pub_iam_policy to the Cloud Run service
+# allowing allUsers to invoke the service API
+resource "google_cloud_run_service_iam_policy" "pub_access" {
+    #[required]
+    service = google_cloud_run_service.run-app-from-tf.name
+    #[required]
+    location = google_cloud_run_service.run-app-from-tf.location
+
+    #[required]
+    policy_data = data.google_iam_policy.pub_iam_policy.policy_data
 }

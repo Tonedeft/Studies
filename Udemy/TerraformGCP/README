@@ -348,3 +348,15 @@ Requires 'compute.images.get' permission
 
 Requires permission for 'iam.serviceAccountUser'
 "Service Account User"
+
+
+###############################################
+
+Section 8: Google Cloud Run
+
+Containerized serverless application
+
+You can stage your containers in "Artifact Registry" that are then used by "Cloud Run"
+
+Permission needed:
+run.services.create  -  Cloud Run Admin
