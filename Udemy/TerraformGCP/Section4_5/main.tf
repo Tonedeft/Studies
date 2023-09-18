@@ -252,6 +252,7 @@ resource "google_compute_attached_disk" "attacheddisk10gb" {
 }
 */
 
+/*
 resource "google_cloud_run_service" "run-app-from-tf" {
     #[required]
     name="${var.gcp_projectid}-run-app-from-tf"
@@ -265,10 +266,20 @@ resource "google_cloud_run_service" "run-app-from-tf" {
             containers {
                 # Hello world image from Google
                 # https://console.cloud.google.com/gcr/images/google-samples/global/hello-app
-                image = "gcr.io/google-samples/hello-app:1.0"
+                # image = "gcr.io/google-samples/hello-app:1.0"
+                image = "gcr.io/google-samples/hello-app:2.0"
             }
         }
     }   
+
+    # traffic {
+    #     revision_name = ""
+    #     percent = 50
+    # }
+    # traffic {
+    #     revision_name = ""
+    #     percent = 50
+    # }
 }
 
 # This IAM Policy allows all users (even non-Google users)
@@ -295,4 +306,4 @@ resource "google_cloud_run_service_iam_policy" "pub_access" {
 
     #[required]
     policy_data = data.google_iam_policy.pub_iam_policy.policy_data
-}
+}*/
