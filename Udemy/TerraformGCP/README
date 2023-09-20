@@ -373,3 +373,11 @@ Section 9: Google Function
   a. Without a binding, the trigger will return 403 forbidden outside of an Admin usage
 
 cloudfunctions.functions.create permission needed
+
+###############################################
+
+Section 10: Big Query
+
+bigquery.datasets.create permission
+
+BigQuery Admin

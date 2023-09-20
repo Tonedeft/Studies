@@ -408,3 +408,13 @@ resource "google_cloudfunctions_function_iam_member" "allowaccess" {
   member = "allUsers"
 }
 */
+
+resource "google_bigquery_dataset" "dataset" {
+  dataset_id = "ds_from_tf"
+}
+
+resource "google_bigquery_table" "table_tf" {
+  table_id = "${var.gcp_projectid}_${var.gcp_region}_table_from_tf"
+  
+  dataset_id = google_bigquery_dataset.dataset.dataset_id
+}
