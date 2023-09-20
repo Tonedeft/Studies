@@ -58,6 +58,10 @@ variable service_account_email {
     default = "test@google.com"
 }
 
+variable "gcs_func_source_code_dir" {
+    type = string
+    default = "test"
+}
 variable "gcs_func_source_code_zip" {
     type = string
     default = "test.zip"

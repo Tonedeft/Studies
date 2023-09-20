@@ -308,6 +308,11 @@ resource "google_cloud_run_service_iam_policy" "pub_access" {
     policy_data = data.google_iam_policy.pub_iam_policy.policy_data
 }*/
 
+data "archive_file" "cloud_function_zip" {
+  type        = "zip"
+  output_path = var.gcs_func_source_code_zip
+  source_dir = var.gcs_func_source_code_dir
+}
 
 # Resource type = Google Storage Bucket
 # Resource name = cloud-function-source

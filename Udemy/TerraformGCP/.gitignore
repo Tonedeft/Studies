@@ -6,3 +6,4 @@ terraform.exe
 **/*.auto.tfvars*
 **/keys.json
 **/secrets*
+**/*.zip
