@@ -360,3 +360,16 @@ You can stage your containers in "Artifact Registry" that are then used by "Clou
 
 Permission needed:
 run.services.create  -  Cloud Run Admin
+
+
+###############################################
+
+Section 9: Google Function
+
+1. Create bucket (google_storage_bucket)
+2. Upload source.zip (containing index.js and package.json) (google_storage_bucket_object)
+3. Deploy function (google_cloudfunctions_function)
+4. Policy binding (google_cloudfunctions_function_iam_member)
+  a. Without a binding, the trigger will return 403 forbidden outside of an Admin usage
+
+cloudfunctions.functions.create permission needed
