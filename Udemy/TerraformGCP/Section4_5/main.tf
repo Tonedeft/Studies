@@ -308,6 +308,8 @@ resource "google_cloud_run_service_iam_policy" "pub_access" {
     policy_data = data.google_iam_policy.pub_iam_policy.policy_data
 }*/
 
+
+/*
 data "archive_file" "cloud_function_zip" {
   type        = "zip"
   output_path = var.gcs_func_source_code_zip
@@ -405,3 +407,4 @@ resource "google_cloudfunctions_function_iam_member" "allowaccess" {
   role = "roles/cloudfunctions.invoker"
   member = "allUsers"
 }
+*/
