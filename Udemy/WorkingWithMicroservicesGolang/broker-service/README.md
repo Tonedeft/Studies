@@ -7,9 +7,13 @@
 
 ## Dependencies
 go v. 1.18 or later
-```go get github.com/go-chi/chi/v5```
-```go get github.com/go-chi/chi/middleware```
-```go get github.com/go-chi/cors```
+
+```bash
+go get github.com/go-chi/chi/v5
+go get github.com/go-chi/chi/middleware
+go get github.com/go-chi/cors
+```
+
 package net/http
 
 ## Files
@@ -22,17 +26,15 @@ Creates Listener on Port 80
 
 | Route | Method  | Handler |
 | ----- | ------- | ------- |
-| `GET`   | "/ping" | middleware.Heartbeat  |
-| `POST`  | "/"     | app.Broker |
+| `GET`  | "/ping" | middleware.Heartbeat  |
+| `POST` | "/"     | app.Broker |
 
 ### cmd/api/handlers.go
 
 **app.Broker**
-
-
-
-## App Functionality
-
+Currently just Writes "Hit the broker" to the HTTP Response
 
 ## To Run:
-```go run ./cmd/api```
+```bash
+go run ./cmd/api
+```
