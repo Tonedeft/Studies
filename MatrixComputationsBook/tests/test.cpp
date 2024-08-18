@@ -33,19 +33,23 @@ int main() {
     mat5.print();
 
     ColVector<int, 6> colvec;
-    colvec(1,0) = 2;
-    colvec(2,0) = 3;
-    colvec(4,0) = 6;
+    colvec(1) = 2;
+    colvec(2) = 3;
+    colvec(4) = 6;
     RowVector<int, 6> rowvec;
-    rowvec(1,0) = 1;
-    rowvec(2,0) = 2;
-    rowvec(4,0) = 0;
+    rowvec(1) = 1;
+    rowvec(2) = 2;
+    rowvec(4) = 0;
 
     auto res = mat6 * colvec;
     res.print();
 
     auto res1 = rowvec * colvec;
     std::cout << res1 << std::endl;
+
+    auto res2 = colvec * rowvec;
+    res2.print();
+    // std::cout << res2 << std::endl;
     // This fails to compile as expected because the types don't match up
     //mat3 = mat3.transpose();
 
