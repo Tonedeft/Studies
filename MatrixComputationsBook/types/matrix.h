@@ -134,10 +134,21 @@ Matrix<_T, HEIGHT1, WIDTH2> operator*(const Matrix<_T, HEIGHT1, WIDTH1>& lhs, co
     return ret;
 }
 
-// template <typename _T, size_t HEIGHT> using ColVector = Matrix<_T, HEIGHT, 1>;
+template<typename _T, size_t HEIGHT, size_t WIDTH>
+Matrix<_T, HEIGHT, WIDTH> operator*(_T scalar, const Matrix<_T, HEIGHT, WIDTH>& rhs) {
+    Matrix<_T, HEIGHT, WIDTH> ret;
+    
+    for (size_t i = 0; i < HEIGHT; ++i) {
+        for (size_t j = 0; j < WIDTH; ++j) {
+            ret(i,j) += scalar * rhs.get(i,j);
+        }
+    }
 
-// template <typename _T, size_t WIDTH> using RowVector = Matrix<_T, 1, WIDTH>;
+    return ret;
+}
 
+template <typename _T, size_t WIDTH>
+class RowVector;
 
 template <typename _T, size_t HEIGHT>
 class ColVector : public Matrix<_T, HEIGHT, 1>
@@ -156,6 +167,16 @@ public:
     constexpr _T& operator()(size_t i) {
         assert(i <= HEIGHT);
         return this->data[i][0];
+    }
+    
+    RowVector<_T, HEIGHT> transpose() const {
+        RowVector<_T, HEIGHT> t;
+
+        for (size_t i = 0; i < HEIGHT; ++i) {
+            t(i) = this->data[i][0];
+        }
+
+        return t;
     }
 };
 
@@ -178,6 +199,15 @@ public:
         return this->data[0][i];
     }
 
+    ColVector<_T, WIDTH> transpose() const {
+        ColVector<_T, WIDTH> t;
+
+        for (size_t i = 0; i < WIDTH; ++i) {
+            t(i) = this->data[0][i];
+        }
+
+        return t;
+    }
 };
 
 template <typename _T, size_t LENGTH>

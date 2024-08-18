@@ -49,9 +49,17 @@ int main() {
 
     auto res2 = colvec * rowvec;
     res2.print();
+
+    auto res3 = 5 * res2;
+    res3.print();
     // std::cout << res2 << std::endl;
     // This fails to compile as expected because the types don't match up
     //mat3 = mat3.transpose();
+
+    auto res4 = rowvec.transpose();
+    res4.print();
+    auto res5 = colvec.transpose();
+    res5.print();
 
     return 0;
 }
