@@ -29,7 +29,6 @@ public:
                 this->data[i][j] = rhs.data[i][j];
             }
         }
-
     }
 
     Matrix& operator=(const Matrix& rhs) {
@@ -42,6 +41,24 @@ public:
         }
 
         return *this;
+    }
+
+    bool operator==(const Matrix& rhs) const {
+        bool isEqual = true;
+        
+        for (size_t i = 0; i < HEIGHT; ++i) {
+            for (size_t j = 0; j < WIDTH; ++j) {
+                if (this->data[i][j] != rhs.data[i][j]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    bool operator!=(const Matrix& rhs) const {
+        return !operator==(rhs);
     }
 
     _T get(size_t i, size_t j) const {

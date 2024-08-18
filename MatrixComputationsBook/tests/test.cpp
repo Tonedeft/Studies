@@ -1,5 +1,37 @@
 #include <matrix.h>
 
+bool testMatrixVectorMult() {
+    Matrix<int, 3, 2> mat;
+    mat(0,0) = 1;
+    mat(1,0) = 3;
+    mat(2,0) = 5;
+    mat(0,1) = 2;
+    mat(1,1) = 4;
+    mat(2,1) = 6;
+
+    ColVector<int, 2> vec;
+    vec(0) = 7;
+    vec(1) = 8;
+
+    auto res = mat * vec;
+    res.print();
+
+    ColVector<int, 3> exp;
+    exp(0) = 23;
+    exp(1) = 53;
+    exp(2) = 83;
+
+    if (res != exp) {
+        std::cout << "FAIL" << std::endl;
+        return false;
+    }
+
+    std::cout << "PASS" << std::endl;
+
+    return true;
+}
+
+
 int main() {
 
     Matrix<int, 5, 6> mat;
@@ -60,6 +92,8 @@ int main() {
     res4.print();
     auto res5 = colvec.transpose();
     res5.print();
+
+    testMatrixVectorMult();
 
     return 0;
 }
